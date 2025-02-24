@@ -75,31 +75,14 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-   # - name: Cache pip
-    #  uses: actions/cache@v3
-   #   with:
-    #    path: ~/.cache/pip
-    #    key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-    #    restore-keys: |
-     #     ${{ runner.os }}-pip-
-    
     - name: Cache pip
       uses: actions/cache@v3
       with:
         path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}-${{ runner.os }}-${{ runner.architecture }}
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
-  
-    - name: Handle Cache Miss
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: echo "Cache was not found, installing dependencies from scratch."
-  
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt || { echo 'Dependency installation failed'; exit 1; }
-
+    
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
       with:
