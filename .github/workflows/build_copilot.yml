@@ -40,7 +40,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-20.04, windows-latest, ubuntu-20.04]
+        os: [macos-latest, ubuntu-22.04 windows-latest, ubuntu-22.04]
         include:
           - os: macos-latest
             TARGET: macos
@@ -48,7 +48,7 @@ jobs:
             OUT_FILE_NAME: darts-wled-mac
             ASSET_MIME: application/zip
 
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             TARGET: ubuntu
             CMD_BUILD: pyinstaller -F -n darts-wled -i resources/darts-wled.svg darts-wled.py
             OUT_FILE_NAME: darts-wled
@@ -60,14 +60,14 @@ jobs:
             OUT_FILE_NAME: darts-wled.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
 
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             TARGET: linux-arm64
             CMD_BUILD: |
               sudo apt-get update
               sudo apt-get install -y qemu-user-static binfmt-support
               docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-              docker run -v $(pwd):/workdir -w /workdir arm64v8/ubuntu:20.04 apt-get update -y && pip install -r requirements.txt --break-system-packages && pyinstaller -F -n darts-wled-arm64 -i resources/darts-wled.svg darts-wled.py
-              docker run --rm -v /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static --platform linux/arm64/v8 -v $(pwd):/workdir -w /workdir arm64v8/ubuntu:20.04 bash -c "apt-get update -y && apt-get install -y python3 && pip install -r requirements.txt --break-system-packages && pyinstaller -F -n darts-wled-arm64 -i resources/darts-wled.svg darts-wled.py"
+              docker run -v $(pwd):/workdir -w /workdir arm64v8/ubuntu:22.04 apt-get update -y && pip install -r requirements.txt --break-system-packages && pyinstaller -F -n darts-wled-arm64 -i resources/darts-wled.svg darts-wled.py
+              docker run --rm -v /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static --platform linux/arm64/v8 -v $(pwd):/workdir -w /workdir arm64v8/ubuntu:22.04 bash -c "apt-get update -y && apt-get install -y python3 && pip install -r requirements.txt --break-system-packages && pyinstaller -F -n darts-wled-arm64 -i resources/darts-wled.svg darts-wled.py"
             OUT_FILE_NAME: darts-wled-arm64
             ASSET_MIME: application/octet-stream
 
