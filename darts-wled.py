@@ -149,7 +149,8 @@ def control_wled(effect_list, ptext, bss_requested = True, is_win = False):
         sio.emit('message', 'board-reset')
         time.sleep(0.15)
 
-    if bss_requested == True and (BOARD_STOP_START != 0.0 or is_win == True):
+   # if bss_requested == True and (BOARD_STOP_START != 0.0 or is_win == True):
+    if bss_requested == True and (BOARD_STOP_START != 0.0):
         waitingForBoardStart = True
         sio.emit('message', 'board-stop')
         if is_win == 1:
