@@ -16,7 +16,7 @@ jobs:
     steps:
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v3
+      uses: actions/create-release@latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -85,7 +85,7 @@ jobs:
       run: ${{matrix.CMD_BUILD}}
 
     - name: Load Release URL File from release job
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v1
       with:
         name: release_url
 
