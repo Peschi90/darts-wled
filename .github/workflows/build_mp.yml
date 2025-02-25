@@ -1,7 +1,6 @@
 name: Build
 
 on:
-  workflow_dispatch:
   push:
     tags:
     - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
@@ -16,12 +15,12 @@ jobs:
     steps:
     - name: Create Release
       id: create_release
-      uses: actions/create-release@latest
+      uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: V2
-        release_name: Release V2
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
         draft: false
         prerelease: false
     - name: Output Release URL File
@@ -45,7 +44,7 @@ jobs:
             OUT_FILE_NAME: darts-wled-mac
             ASSET_MIME: application/zip
 
-          - os: ubuntu-22.04
+          - os: ubuntu-20.04
             TARGET: ubuntu
             CMD_BUILD: pyinstaller -F -n darts-wled -i resources/darts-wled.svg darts-wled.py
             OUT_FILE_NAME: darts-wled
@@ -57,22 +56,22 @@ jobs:
             OUT_FILE_NAME: darts-wled.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
 
-          - os: ubuntu-22.04
+          - os: ubuntu-20.04
             TARGET: linux-arm64
             CMD_BUILD: |
               sudo apt-get update
               sudo apt-get install -y qemu-user-static binfmt-support
               docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-              docker run -v $(pwd):/workdir -w /workdir arm64v8/ubuntu:22.04 apt-get update -y && pip install -r requirements.txt --break-system-packages && pyinstaller -F -n darts-wled-arm64 -i resources/darts-wled.svg darts-wled.py
-              docker run --rm -v /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static --platform linux/arm64/v8 -v $(pwd):/workdir -w /workdir arm64v8/ubuntu:22.04 bash -c "apt-get update -y && apt-get install -y python3-pip && pip install -r requirements.txt && pyinstaller -F -n darts-wled-arm64 -i resources/darts-wled.svg darts-wled.py"
+              docker run -v $(pwd):/workdir -w /workdir arm64v8/ubuntu:20.04 apt-get update -y && pip install -r requirements.txt --break-system-packages && pyinstaller -F -n darts-wled-arm64 -i resources/darts-wled.svg darts-wled.py
+              docker run --rm -v /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static --platform linux/arm64/v8 -v $(pwd):/workdir -w /workdir arm64v8/ubuntu:20.04 bash -c "apt-get update -y && apt-get install -y python3-pip && pip install -r requirements.txt && pyinstaller -F -n darts-wled-arm64 -i resources/darts-wled.svg darts-wled.py"
             OUT_FILE_NAME: darts-wled-arm64
             ASSET_MIME: application/octet-stream
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up Python 3.8
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: 3.8
 
@@ -93,7 +92,7 @@ jobs:
       id: get_release_info
       shell: bash
       run: |
-        value=`cat release_url/release_url.txt`
+        value=`cat release_url.txt`
         echo ::set-output name=upload_url::$value
         
     - name: Upload Release Asset
