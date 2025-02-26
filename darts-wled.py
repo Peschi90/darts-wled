@@ -145,12 +145,19 @@ def control_wled(effect_list, ptext, bss_requested = True, is_win = False):
     global waitingForIdle
     global waitingForBoardStart
 
-  #  if is_win: 
-  #      sio.emit('message', 'board-reset')
-  #      time.sleep(0.15)
+    if is_win: 
+        sio.emit('message', 'board-reset')
+        time.sleep(0.15)
 
    # if bss_requested == True and (BOARD_STOP_START != 0.0 or is_win == True):
     if bss_requested == True and (BOARD_STOP_START != 0.0):
+        waitingForBoardStart = True
+        sio.emit('message', 'board-stop')
+        if is_win == 1:
+            time.sleep(0.15)
+    
+    #Bord Stop after Win
+    if BOARD_STOP_AFTER_WIN != 0 and is_win == True:
         waitingForBoardStart = True
         sio.emit('message', 'board-stop')
         if is_win == 1:
@@ -400,6 +407,7 @@ if __name__ == "__main__":
     ap.add_argument("-WEPS", "--wled_endpoints", required=True, nargs='+', help="Url(s) to wled instance(s)")
     ap.add_argument("-DU", "--effect_duration", type=int, default=0, required=False, help="Duration of a played effect in seconds. After that WLED returns to idle. 0 means infinity duration.")
     ap.add_argument("-BSS", "--board_stop_start", default=0.0, type=float, required=False, help="If greater than 0.0 stops the board before playing effect")
+    ap.add_argument("-BSW", "--board_stop_after_win", type=int, choices=range(0, 2), default=False, required=False, help="Let the board stop after winning the match check it to activate the board stop")
     ap.add_argument("-BRI", "--effect_brightness", type=int, choices=range(1, 256), default=DEFAULT_EFFECT_BRIGHTNESS, required=False, help="Brightness of current effect")
     ap.add_argument("-HFO", "--high_finish_on", type=int, choices=range(1, 171), default=None, required=False, help="Individual score for highfinish")
     ap.add_argument("-HF", "--high_finish_effects", default=None, required=False, nargs='*', help="WLED effect-definition when high-finish occurs")
@@ -455,6 +463,7 @@ if __name__ == "__main__":
     WLED_ENDPOINT_PRIMARY = args['wled_endpoints'][0]
     EFFECT_DURATION = args['effect_duration']
     BOARD_STOP_START = args['board_stop_start']
+    BOARD_STOP_AFTER_WIN = args['board_stop_after_win']
     EFFECT_BRIGHTNESS = args['effect_brightness']
     HIGH_FINISH_ON = args['high_finish_on']
 
