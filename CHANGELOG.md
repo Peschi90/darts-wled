@@ -1,3 +1,9 @@
+## 2.0.0.b4
+
+- Implement Board Stop after Win Parameter
+- 
+
+
 ## 1.5.0
 
 - rename application to darts-wled
