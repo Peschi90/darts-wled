@@ -1,3 +1,8 @@
+## 2.0.0.b5
+
+- Changed changelog to main branch
+- 
+
 ## 2.0.0.b4
 
 - Implement Board Stop after Win Parameter
