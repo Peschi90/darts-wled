@@ -1,3 +1,8 @@
+## 2.0.0.b6
+
+- just a short check update
+- 
+
 ## 2.0.0.b5
 
 - Changed changelog to main branch
