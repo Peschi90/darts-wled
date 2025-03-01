@@ -1,3 +1,6 @@
+## 0.1.0
+- version change to 0.1.0
+
 ## 2.0.0.b6
 
 - just a short check update
