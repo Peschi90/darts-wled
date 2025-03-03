@@ -28,7 +28,7 @@ http_session.verify = False
 sio = socketio.Client(http_session=http_session, logger=True, engineio_logger=True)
 
 
-VERSION = '0.1.3'
+VERSION = '0.1.4'
 
 DEFAULT_EFFECT_BRIGHTNESS = 175
 DEFAULT_EFFECT_IDLE = 'solid|lightgoldenrodyellow'
@@ -342,7 +342,7 @@ def process_variant_x01(msg):
         else:
             control_wled(MATCH_WON_EFFECTS, 'Match-won', is_win=True)
     
-    elif msg['event'] == 'Takeout' and TAKEOUT_EFFECTS is not None:
+    elif msg['status'] == 'Takeout' and TAKEOUT_EFFECTS is not None:
         control_wled(TAKEOUT_EFFECTS, 'takeout!')
 
     elif msg['event'] == 'match-started':
