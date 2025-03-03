@@ -28,7 +28,7 @@ http_session.verify = False
 sio = socketio.Client(http_session=http_session, logger=True, engineio_logger=True)
 
 
-VERSION = '0.1.6'
+VERSION = '0.1.7'
 
 DEFAULT_EFFECT_BRIGHTNESS = 175
 DEFAULT_EFFECT_IDLE = 'solid|lightgoldenrodyellow'
@@ -322,13 +322,6 @@ def process_variant_x01(msg):
                         break
             if area_found == False:
                 ppi('Darts-thrown: ' + val + ' - NOT configured!')
-                if TAKEOUT_EFFECTS is not None:
-                    if msg['event'] == 'Takeout':
-                        control_wled(TAKEOUT_EFFECTS, 'takeout!')
-                    else:
-                        ppi('Takeout: was not send!')   
-                else: 
-                    ppi('Takeout --TO:- NOT configured!')
 
     elif msg['event'] == 'darts-pulled':
         if EFFECT_DURATION == 0:
@@ -380,6 +373,12 @@ def message(msg):
             #     process_match_cricket(msg)
         elif('event' in msg and msg['event'] == 'lobby'):
             process_lobby(msg)
+        elif('event' in msg and msg['event'] == 'Takeout'):
+            if TAKEOUT_EFFECTS is not None:
+                ppi('TAKEOUT_EFFECTS are set')
+                control_wled(TAKEOUT_EFFECTS, 'takeout!')
+            else:
+                ppi('TAKEOUT_EFFECTS are NOT set')
 
     except Exception as e:
         ppe('DATA-FEEDER Message failed: ', e)
