@@ -28,7 +28,7 @@ http_session.verify = False
 sio = socketio.Client(http_session=http_session, logger=True, engineio_logger=True)
 
 
-VERSION = '0.1.5'
+VERSION = '0.1.6'
 
 DEFAULT_EFFECT_BRIGHTNESS = 175
 DEFAULT_EFFECT_IDLE = 'solid|lightgoldenrodyellow'
@@ -322,6 +322,13 @@ def process_variant_x01(msg):
                         break
             if area_found == False:
                 ppi('Darts-thrown: ' + val + ' - NOT configured!')
+                if TAKEOUT_EFFECTS is not None:
+                    if msg['event'] == 'Takeout':
+                        control_wled(TAKEOUT_EFFECTS, 'takeout!')
+                    else:
+                        ppi('Takeout: was not send!')   
+                else: 
+                    ppi('Takeout --TO:- NOT configured!')
 
     elif msg['event'] == 'darts-pulled':
         if EFFECT_DURATION == 0:
@@ -341,9 +348,6 @@ def process_variant_x01(msg):
             control_wled(HIGH_FINISH_EFFECTS, 'Match-won - HIGHFINISH', is_win=True)
         else:
             control_wled(MATCH_WON_EFFECTS, 'Match-won', is_win=True)
-    
-    elif msg['event'] == 'Takeout' and TAKEOUT_EFFECTS is not None:
-        control_wled(TAKEOUT_EFFECTS, 'takeout!')
 
     elif msg['event'] == 'match-started':
         if EFFECT_DURATION == 0:

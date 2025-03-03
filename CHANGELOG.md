@@ -1,3 +1,6 @@
+## 0.1.6
+ - change Takeout activate logic
+ 
 ## 0.1.5
  - bugfix for Var Names
  
