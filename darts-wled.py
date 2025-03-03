@@ -28,7 +28,7 @@ http_session.verify = False
 sio = socketio.Client(http_session=http_session, logger=True, engineio_logger=True)
 
 
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 
 DEFAULT_EFFECT_BRIGHTNESS = 175
 DEFAULT_EFFECT_IDLE = 'solid|lightgoldenrodyellow'
@@ -341,6 +341,9 @@ def process_variant_x01(msg):
             control_wled(HIGH_FINISH_EFFECTS, 'Match-won - HIGHFINISH', is_win=True)
         else:
             control_wled(MATCH_WON_EFFECTS, 'Match-won', is_win=True)
+    
+    elif msg['event'] == 'Takeout' and TAKOUT_EFFECTS is not None:
+        control_wled(TAKOUT_EFFECTS, 'takeout!')
 
     elif msg['event'] == 'match-started':
         if EFFECT_DURATION == 0:
@@ -417,6 +420,7 @@ if __name__ == "__main__":
     ap.add_argument("-B", "--busted_effects", default=None, required=False, nargs='*', help="WLED effect-definition when bust occurs")
     ap.add_argument("-PJ", "--player_joined_effects", default=None, required=False, nargs='*', help="WLED effect-definition when player-join occurs")
     ap.add_argument("-PL", "--player_left_effects", default=None, required=False, nargs='*', help="WLED effect-definition when player-left occurs")
+    ap.add_argument("-TO", "--takeout_effect", default=None, required=False, nargs='*', help="WLED effect-definition during takeout or after 3 detected darts")
     for v in range(0, 181):
         val = str(v)
         ap.add_argument("-S" + val, "--score_" + val + "_effects", default=None, required=False, nargs='*', help="WLED effect-definition for score " + val)
@@ -486,6 +490,7 @@ if __name__ == "__main__":
     HIGH_FINISH_EFFECTS = parse_effects_argument(args['high_finish_effects'])
     PLAYER_JOINED_EFFECTS = parse_effects_argument(args['player_joined_effects'])
     PLAYER_LEFT_EFFECTS = parse_effects_argument(args['player_left_effects'])
+    TAKOUT_EFFECTS = parse_effects_argument(args['takout_effects'])
 
     SCORE_EFFECTS = dict()
     for v in range(0, 181):

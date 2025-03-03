@@ -1,3 +1,8 @@
+## 0.1.1
+- version change to 0.1.1
+- implement -TO argument for takeout effekt
+- implement possibility to configure takeout effekt
+
 ## 0.1.0
 - version change to 0.1.0
 
