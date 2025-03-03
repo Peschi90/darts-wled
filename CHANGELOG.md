@@ -1,4 +1,4 @@
-## 0.1.7
+## 0.1.8
  - change Takeout activate logic
  
 ## 0.1.5
