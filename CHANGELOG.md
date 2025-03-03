@@ -1,3 +1,6 @@
+## 0.1.2
+ - bugfix for Var Names
+ 
 ## 0.1.1
 - version change to 0.1.1
 - implement -TO argument for takeout effekt

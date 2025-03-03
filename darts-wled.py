@@ -342,8 +342,8 @@ def process_variant_x01(msg):
         else:
             control_wled(MATCH_WON_EFFECTS, 'Match-won', is_win=True)
     
-    elif msg['event'] == 'Takeout' and TAKOUT_EFFECTS is not None:
-        control_wled(TAKOUT_EFFECTS, 'takeout!')
+    elif msg['event'] == 'Takeout' and TAKEOUT_EFFECTS is not None:
+        control_wled(TAKEOUT_EFFECTS, 'takeout!')
 
     elif msg['event'] == 'match-started':
         if EFFECT_DURATION == 0:
@@ -490,7 +490,7 @@ if __name__ == "__main__":
     HIGH_FINISH_EFFECTS = parse_effects_argument(args['high_finish_effects'])
     PLAYER_JOINED_EFFECTS = parse_effects_argument(args['player_joined_effects'])
     PLAYER_LEFT_EFFECTS = parse_effects_argument(args['player_left_effects'])
-    TAKOUT_EFFECTS = parse_effects_argument(args['takout_effects'])
+    TAKEOUT_EFFECTS = parse_effects_argument(args['takeout_effects'])
 
     SCORE_EFFECTS = dict()
     for v in range(0, 181):
