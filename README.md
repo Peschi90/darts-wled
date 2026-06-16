@@ -1,5 +1,5 @@
 # DARTS-WLED
-[![Downloads](https://img.shields.io/github/downloads/Peschi90/darts-wled/total.svg)](https://github.com/Peschi90/darts-wled/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/lbormann/darts-wled/total.svg)](https://github.com/lbormann/darts-wled/releases/latest)
 
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M11XJQLO)
