@@ -1,4 +1,4 @@
-## b2.0.1.5
+## b2.0.1.6
 - major refactor and code cleanup
 - improved stability and performance
 - changed to new Auth flow
